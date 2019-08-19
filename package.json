@@ -20,5 +20,12 @@
   "homepage": "https://github.com/SamanthaEgge/portfolio-v1-be#readme",
   "devDependencies": {
     "nodemon": "^1.19.1"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.17.1",
+    "helmet": "^3.20.0",
+    "knex": "^0.19.2",
+    "pg": "^7.12.1"
   }
 }

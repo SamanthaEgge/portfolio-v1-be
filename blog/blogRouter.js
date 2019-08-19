@@ -20,4 +20,12 @@ router.get('/blog', (request, response) => {
 
 router.get('/blog/?')
 
+router.get('/blog/:title', (request, response) => {
+
+})
+
+//// middleware for blogRouter
+
+
+
 module.exports = router
