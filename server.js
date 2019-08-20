@@ -1,6 +1,6 @@
 const express = require('express')
 
-const BlogRoutes = require('./blog/blogRouter.js')
+const BlogRoutes = require('./blog/blog-router.js/index.js')
 const ProtectedRoutes = require('./protected/protected-router.js')
 const UserRoutes = require('./user/user-router.js')
 

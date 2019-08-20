@@ -3,7 +3,7 @@
 const express = require('express')
 
 const router = express.Router()
-const db = require('./blogDb')
+const db = require('./blog-model')
 
 //// GET for main page of blog, retrieves a set number of posts
 
