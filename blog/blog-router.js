@@ -1,14 +1,18 @@
-//// These routes are set up for the front facing section of the blog
+//// All blog routing
 
 const express = require('express')
 
 const router = express.Router()
-const db = require('./blog-model')
+const Blog = require('./blog-model')
 
-//// GET for main page of blog, retrieves a set number of posts
+const restricted = require('../middleware/restricted.js/index.js')
+
+
+/////// Non-restricted routes, for front-facing portfolio
+/// GET for main page of blog, retrieves a set number of posts
 
 router.get('/blog', (request, response) => {
-  db.get()
+  Blog.find()
     .then(posts => {
       response.status(200).json(posts)
     })
@@ -18,11 +22,20 @@ router.get('/blog', (request, response) => {
     })
 })
 
-router.get('/blog/?')
+router.get('/blog/?', (request, response) => {
+  Blog.get()
+})
 
 router.get('/blog/:title', (request, response) => {
+  const title = request.params.title
+
 
 })
+
+
+/////// Restricted routes, for admin panel
+
+
 
 //// middleware for blogRouter
 
