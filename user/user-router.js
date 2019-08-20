@@ -17,13 +17,14 @@ router.get('/users', restricted, (request, response) => {
 })
 
 router.post('/login', (request, response) => {
-  let { email, password } = request.body;
+  const { email, password } = request.body;
 
   Users.findBy({ email })
     .first()
     .then(user => {
       if (user && bcrypt.compareSync(password, user.password)) {
         request.session.user = user.email //adding data to our cookie
+        request.session.loggedIn = true;
         response.status(200).json({ message: `Welcome ${user.email}!` });
       } else {
         response.status(401).json({ message: 'Invalid Credentials' });
@@ -49,5 +50,10 @@ router.post('/initialize', (request, response) => {
   }
 })
 
+router.get('/admin/logout', restricted, (request, response) => {
+  request.session.destroy(function(error) {
+    response.status(200).json({ message: 'You have been logged out' })
+  })
+})
 
 module.exports = router

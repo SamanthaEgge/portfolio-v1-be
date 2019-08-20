@@ -23,10 +23,14 @@ const sessionOptions = {
 server.use(helmet())
 server.use(express.json())
 server.use(cors())
-server.use(session())
+server.use(session(sessionOptions))
 
 server.use('/blog', BlogRoutes)
 server.use('/', UserRoutes)
+
+server.get('/', (request, response) => {
+  response.json({ api: 'up', session: request.session })
+})
 
 server.get('/admin', restricted, (request, response) => {
   response.send('Admin pages')
