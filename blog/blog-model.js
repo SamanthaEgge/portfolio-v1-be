@@ -10,4 +10,4 @@ module.exports = {
 function find() {
   return db('users')
     .select('id', 'email', 'password');
-}
+} 

@@ -2,9 +2,11 @@ const express = require('express')
 const helmet = require('helmet')
 const cors = require('cors')
 const session = require('express-session')
+const KnexSessionStore = require('connect-session-knex')(session)
 
 const BlogRoutes = require('./blog/blog-router.js/index.js')
 const UserRoutes = require('./user/user-router.js')
+const knexConnection = require('../database/dbConfig.js')
 
 const server = express();
 
@@ -18,6 +20,11 @@ const sessionOptions = {
   },
   resave: false,
   saveUninitialized: true,
+  // store: new KnexSessionStore({  //// start back up once I create db
+  //   knex: knexConnection,
+  //   createtable: true,
+  //   clearInterval: 1000 * 60 * 60
+  // })
 }
 
 server.use(helmet())
