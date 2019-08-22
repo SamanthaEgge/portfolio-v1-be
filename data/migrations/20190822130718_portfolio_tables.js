@@ -3,7 +3,7 @@ exports.up = function(knex) {
   return knex.schema
     .createTable('users', users => {
       users.increments();
-      users.string('username', 128)
+      users.string('email', 128)
         .notNullable()
         .unique();
       users.string('password', 128)
@@ -15,13 +15,19 @@ exports.up = function(knex) {
         .notNullable()
         .unique();
     })
+    .createTable('skills', skill => {
+      skill.increments()
+    })
     .createTable('blog', blog => {
       blog.increments();
       blog.string('blog_title', 255)
       blog.text('blog_summary')
         .notNullable()
+      blog.timestamp('blog_created', { useTz: true })
       blog.date('blog_published')
-        
+      blog.boolean('blog_publish')
+        .defaultTo(false)
+      blog.
       blog.integer('categories_id')
         .unsigned()
         .references('categories.id')
@@ -34,12 +40,19 @@ exports.up = function(knex) {
         .notNullable();
       feats.text('feature_summary')
         .notNullable();
+      feats.boolean('feature_active')
+        .defaultTo(false)
+      feats.integer('feature_position')
+        .unsigned()
       feats.integer('categories_id')
         .unsigned()
         .references('categories.id')
       feats.integer('blog_id')
         .unsigned()
         .references('blog.id')
+      feats.integer('skill_id')
+        .unsigned()
+        .references('skill.id')
     })
 };
 
