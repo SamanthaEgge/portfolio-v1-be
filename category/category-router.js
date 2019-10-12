@@ -6,7 +6,7 @@ const restricted = require('../middleware/restricted.js')
 
 //// Public routes
 router.get('/', (request, response) => {
-  Categories.find()
+  Categories.findAllCats()
     .then(cats => {
       response.status(200).json(cats)
     })
@@ -19,7 +19,7 @@ router.get('/', (request, response) => {
 router.get('/:catId', (request, response) => {
   const catId = request.params.catId
 
-  Categories.findById(catId)
+  Categories.findCatById(catId)
     .then(cat => {
       response.status(200).json(cat)
     })
@@ -58,5 +58,10 @@ router.put('/:catId', (request, response) => {
 })
 
 router.delete('/:catId', (request, response) => {
-  
+  const catId = request.params.catId
+
+  Categories.deleteCat(catId)
+    .then(removed => {
+      response.status(200).json({ removed, message: `Sucessfully deleted Category ${catId}` })
+    })
 })
