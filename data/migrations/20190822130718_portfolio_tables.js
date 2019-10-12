@@ -31,10 +31,6 @@ exports.up = function(knex) {
       blog.date('blog_published')
       blog.boolean('blog_publish')
         .defaultTo(false)
-      blog.
-      blog.integer('categories_id')
-        .unsigned()
-        .references('categories.cat_id')
     })
     .createTable('features', feats => {
       feats.increments('feat_id');
@@ -48,17 +44,39 @@ exports.up = function(knex) {
         .defaultTo(false)
       feats.integer('feature_position')
         .unsigned()
-      feats.integer('categories_id')
-        .unsigned()
-        .references('categories.cat_id')
+      // feats.integer('categories_id')
+      //   .unsigned()
+      //   .references('categories.cat_id')
       feats.integer('blog_id')
         .unsigned()
         .references('blog.blog_id')
-      feats.integer('skill_id')
+      // feats.integer('skill_id')
+      //   .unsigned()
+      //   .references('skill.skill_id')
+    })
+    .createTable('skillPair', skillPair => {
+      skillPair.increments('skill_pair_id')
+      skillPair.integer('skill_id')
         .unsigned()
-        .references('skill.skill_id')
+        .referneces('skills.skill_id')
+      skillPair.integer('feat_id')
+        .unsigned()
+        .references('features.feat_id')
+    })
+    .createTable('categoriesPair', catPair => {
+      catPair.increments('cat_pair_id')
+      catPair.integer('cat_id')
+        .unsigned()
+        .references('categories.cat_id')
+      catPair.integer('blog_id')
+        .unsigned()
+        .references('blog.blog_id')
+      catPair.integer('feat_id')
+        .unsigned()
+        .references('features.feat_id')
     })
 };
+
 
 exports.down = function(knex) {
   return knex.schema

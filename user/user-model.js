@@ -6,7 +6,8 @@ const db = knex(knexConfig.development)
 module.exports = {
   find,
   findBy,
-  create
+  create,
+  findById
 }
 
 function find() {
@@ -31,5 +32,6 @@ function create(user) {
 function findById(id) {
   return db('users')
     .where({ id })
-    .first();
+    .first()
+    .select('*');
 }

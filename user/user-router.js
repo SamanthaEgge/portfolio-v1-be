@@ -5,7 +5,6 @@ const router = express.Router()
 const Users = require('./user-model.js')
 const restricted = require('../middleware/restricted.js')
 
-///// To be removed after Lambda project is complete
 router.get('/users', restricted, (request, response) => {
   Users.find()
     .then(users => {
