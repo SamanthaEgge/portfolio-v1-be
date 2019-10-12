@@ -18,7 +18,7 @@ function findAllCats() {
 
 function findCatById(catId) {
   return db('categories')
-    .where(catId)
+    .where({ cat_id: catId })
     .first()
     .select('*')
 }
@@ -32,4 +32,20 @@ function createCat(newCat) {
     })
 }
 
-function 
+function modifyCat(catId, updateCat) {
+  return db('categories')
+    .where({ cat_id: catId })
+    .update(updateCat)
+    .then(() => {
+      return findCatById(catId)
+    })
+}
+
+function deleteCat(catId) {
+  return db('categories')
+    .where({ cat_id: catId })
+    .del()
+    .then(() => {
+      return catId
+    })
+}
