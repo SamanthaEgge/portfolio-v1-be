@@ -20,18 +20,18 @@ function findBy(filter) {
     .where(filter);
 }
 
-function create(user) {
-  return db('users')
-    .insert(user, 'id')
-    .then(ids => {
-      const [id] = ids;
-      return findById(id)
-    })
-}
-
 function findById(id) {
   return db('users')
     .where({ id })
     .first()
     .select('*');
+}
+
+function create(user) {
+  return db('users')
+    .insert(user, 'user_id')
+    .then(ids => {
+      const [id] = ids;
+      return findById(id)
+    })
 }
