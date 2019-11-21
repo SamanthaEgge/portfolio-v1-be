@@ -5,16 +5,23 @@ const router = express.Router()
 const Users = require('./user-model.js')
 const restricted = require('../middleware/restricted.js')
 
-router.get('/users', restricted, (request, response) => {
-  Users.find()
-    .then(users => {
-      response.json(users)
-    })
-    .catch(error => {
-      console.log(error)
-      response.send(error)
-    })
-})
+
+router.get('/users', restricted, async (request, response) => {
+try {
+  const users = await Users.find();
+
+  if (users) {
+    res.status(200).json({ users, msg: 'The users were found' });
+  } else {
+    res
+      .status(400)
+      .json({ msg: 'Users were not found in the database' });
+  }
+} catch (err) {
+  console.log(err)
+  res.status(500).json({ err, msg: 'Unable to make request to server' });
+}
+});
 
 router.post('/login', (request, response) => {
   const { email, password } = request.body;
