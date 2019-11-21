@@ -7,20 +7,20 @@ const restricted = require('../middleware/restricted.js')
 
 
 router.get('/users', restricted, async (request, response) => {
-try {
-  const users = await Users.find();
+  try {
+    const users = await Users.find();
 
-  if (users) {
-    res.status(200).json({ users, msg: 'The users were found' });
-  } else {
-    res
-      .status(400)
-      .json({ msg: 'Users were not found in the database' });
+    if (users) {
+      response.status(200).json({ users, message: 'The users were found' });
+    } else {
+      response
+        .status(404)
+        .json({ message: 'Users were not found in the database' });
+    }
+  } catch (error) {
+    console.log(error)
+    response.status(500).json({ error, message: 'Unable to make request to server' });
   }
-} catch (err) {
-  console.log(err)
-  res.status(500).json({ err, msg: 'Unable to make request to server' });
-}
 });
 
 router.post('/login', (request, response) => {
