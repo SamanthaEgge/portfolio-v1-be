@@ -3,19 +3,25 @@ const bcrypt = require('bcryptjs')
 
 const router = express.Router()
 const Users = require('./user-model.js')
-const restricted = require('../middleware/restricted.js/index.js')
+const restricted = require('../middleware/restricted.js')
 
-///// To be removed after Lambda project is complete
-router.get('/users', restricted, (request, response) => {
-  Users.find()
-    .then(users => {
-      response.json(users)
-    })
-    .catch(error => {
-      console.log(error)
-      response.send(error)
-    })
-})
+
+router.get('/users', restricted, async (request, response) => {
+  try {
+    const users = await Users.find();
+
+    if (users) {
+      response.status(200).json({ users, message: 'The users were found' });
+    } else {
+      response
+        .status(404)
+        .json({ message: 'Users were not found in the database' });
+    }
+  } catch (error) {
+    console.log(error)
+    response.status(500).json({ error, message: 'Unable to make request to server' });
+  }
+});
 
 router.post('/login', (request, response) => {
   const { email, password } = request.body;

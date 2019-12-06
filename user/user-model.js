@@ -6,12 +6,13 @@ const db = knex(knexConfig.development)
 module.exports = {
   find,
   findBy,
-  create
+  create,
+  findById
 }
 
 function find() {
   return db('users')
-    .select('id', 'email', 'password');
+    .select('id', 'email');
 }
 
 function findBy(filter) {
@@ -19,17 +20,18 @@ function findBy(filter) {
     .where(filter);
 }
 
+function findById(id) {
+  return db('users')
+    .where({ id })
+    .first()
+    .select('*');
+}
+
 function create(user) {
   return db('users')
-    .insert(user, 'id')
+    .insert(user, 'user_id')
     .then(ids => {
       const [id] = ids;
       return findById(id)
     })
-}
-
-function findById(id) {
-  return db('users')
-    .where({ id })
-    .first();
 }
