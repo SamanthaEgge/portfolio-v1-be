@@ -16,24 +16,30 @@ router.get('/', (request, response) => {
     })
 })
 
-router.get('/:skillId', (request, response) => {
+router.get('/:skillId', async (request, response) => {
   const skillId = request.params.skillId
 
-  Skills.findSkillById(skillId)
-    .then(skill => {
-      response.status(200).json(skill)
-    })
-    .catch(error => {
-      console.log(error)
-      response.status(500).json({ error, message: 'Unable to retrieve this skill.' })
-    })
+  try {
+    const skill = await Skills.findSkillById();
+
+    if (skill) {
+      response.status(200).json({ skill, message: 'The skill was found' });
+    } else {
+      response
+        .status(404)
+        .json({ message: 'The skill was not found in the database' });
+    }
+  } catch (error) {
+    console.log(error)
+    response.status(500).json({ error, message: 'Unable to make request to server' });
+  }
 })
 
 //// Restricted Routes
 router.post('/', (request, response) => {
   const newSkill = request.body
-
-  Skills.createSkill(newSkill)
+  if (newSkill) {
+    Skills.createSkill(newSkill)
     .then(skill => {
       response.status(204).json({ skill, message: 'Created a new Skill' })
     })
@@ -41,6 +47,10 @@ router.post('/', (request, response) => {
       console.log(error)
       response.status(500).json({ error, message: 'Unable to create a skill' })
     })
+  } else {
+    response.status(400).json({ message: 'Please submit a skill to be created' })
+  }
+
 })
 
 router.put('/:skillId', (request, response) => {

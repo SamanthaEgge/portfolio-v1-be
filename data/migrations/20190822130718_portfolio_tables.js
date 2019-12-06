@@ -9,7 +9,7 @@ exports.up = function(knex) {
       users.string('password', 128)
         .notNullable();
     })
-    .createTable('categories', cats => {
+    .createTable('categories', cats => {3
       cats.increments('cat_id');
       cats.text('category_name')
         .notNullable()

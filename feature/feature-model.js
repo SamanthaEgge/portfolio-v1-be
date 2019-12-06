@@ -6,6 +6,7 @@ const db = knex(knexConfig.development)
 module.exports = {
   findAllFeats,
   findFeatById,
+  findMainFeats,
   createFeat,
   modifyFeat,
   deleteFeat
@@ -21,6 +22,43 @@ function findFeatById(featId) {
     .where({ feat_id: featId })
     .first()
     .select('*')
+    .then(feat => {
+      feat
+        .leftJoin('blog')
+        .where({ blog_id: feat.blog_id })
+        .select('*')
+        .leftJoin('skill')
+    })
+}
+
+// function findProjectByID(id) {
+//    return db('projects')
+//      .where({id})
+//      .first()
+//      .then(project => {
+//        return db('project_team')
+//          .where({ project_id: id})
+//          .join('vendors as v', 'l.item_vendor', 'v.id')
+//          .select('l.id', 'l.event_id', 'l.item_name', 'l.item_cost', 'l.item_complete', 'v.vendor_name')
+//          .then(items => {
+//            return {...event, items: items}
+//          })
+//      })
+//  }
+
+async function findMainFeats() {
+  let mainFeats;
+  return db('feats')
+    .where({feature_active: true})
+    .select('*')
+    .sort('feature_position')
+    .then(feats => {
+      await feats.forEach(feat => {
+        let addedFeat = findFeatById(feat.feat_id)
+        mainFeats.push(addedFeat)
+      })
+      return mainFeats
+    })
 }
 
 function createFeat(newFeat) {

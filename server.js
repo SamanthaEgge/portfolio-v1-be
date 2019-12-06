@@ -1,6 +1,6 @@
 const express = require('express')
 const helmet = require('helmet')
-const cors = require('cors')
+// const cors = require('cors') need to double check my header customs
 const session = require('express-session')
 const KnexSessionStore = require('connect-session-knex')(session)
 
