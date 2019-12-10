@@ -36,7 +36,7 @@ router.get('/:skillId', async (request, response) => {
 })
 
 //// Restricted Routes
-router.post('/', (request, response) => {
+router.post('/', restricted, (request, response) => {
   const newSkill = request.body
   if (newSkill) {
     Skills.createSkill(newSkill)
@@ -53,7 +53,7 @@ router.post('/', (request, response) => {
 
 })
 
-router.put('/:skillId', (request, response) => {
+router.put('/:skillId', restricted, (request, response) => {
   const skillId = request.params.skillId
   const skillChanges = request.body
 
@@ -67,7 +67,7 @@ router.put('/:skillId', (request, response) => {
     })
 })
 
-router.delete('/:skillId', (request, response) => {
+router.delete('/:skillId', restricted, (request, response) => {
   const skillId = request.params.skillId
 
   Skills.deleteSkill(skillId)

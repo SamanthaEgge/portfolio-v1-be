@@ -7,6 +7,7 @@ module.exports = {
   findAllFeats,
   findFeatById,
   findMainFeats,
+  selectMainFeats,
   createFeat,
   modifyFeat,
   deleteFeat
@@ -31,21 +32,6 @@ function findFeatById(featId) {
     })
 }
 
-// function findProjectByID(id) {
-//    return db('projects')
-//      .where({id})
-//      .first()
-//      .then(project => {
-//        return db('project_team')
-//          .where({ project_id: id})
-//          .join('vendors as v', 'l.item_vendor', 'v.id')
-//          .select('l.id', 'l.event_id', 'l.item_name', 'l.item_cost', 'l.item_complete', 'v.vendor_name')
-//          .then(items => {
-//            return {...event, items: items}
-//          })
-//      })
-//  }
-
 async function findMainFeats() {
   let mainFeats;
   return db('feats')
@@ -59,6 +45,32 @@ async function findMainFeats() {
       })
       return mainFeats
     })
+}
+
+async function selectMainFeats(featArray) {
+  let updatedFeatures;
+  try {
+    let feats = await findAllFeats()
+    console.log(feats)
+    feats.forEach(feat => {
+      db('feats')
+        .where({ feat_id: feat.feat_id })
+        .update({ feature_postition: null })
+    })
+
+    await featArray.forEach(feat => {
+      db('feats')
+        .where({ feat_id: feat.feat_Id })
+        .update(feat.feature_position)
+        .then(feat => {
+          updatedFeatures.push(feat)
+        })
+    })
+    return updatedFeatures
+    
+  } catch {
+    return console.log('error with clearing feat fields')
+  }
 }
 
 function createFeat(newFeat) {
