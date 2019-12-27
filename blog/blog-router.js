@@ -28,17 +28,12 @@ router.get('/blog/?', (request, response) => {
 
 router.get('/blog/:title', (request, response) => {
   const title = request.params.title
-
+  
+  
 
 })
 
 
 /////// Restricted routes, for admin panel
-
-
-
-//// middleware for blogRouter
-
-
 
 module.exports = router
