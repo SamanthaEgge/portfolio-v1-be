@@ -1,13 +1,18 @@
 
 exports.seed = function(knex) {
   // Deletes ALL existing entries
-  return knex('table_name').del()
+  return knex('categories').del()
     .then(function () {
       // Inserts seed entries
-      return knex('table_name').insert([
-        {id: 1, colName: 'rowValue1'},
-        {id: 2, colName: 'rowValue2'},
-        {id: 3, colName: 'rowValue3'}
+      return knex('categories').insert([
+        {category_name: 'life'},
+        {category_name: 'react'},
+        {category_name: 'backend'},
+        {category_name: 'frontend'},
+        {category_name: 'UI'},
+        {category_name: 'project'},
+        {category_name: 'databasedesign'},
+        {category_name: 'tutorial'}
       ]);
     });
 };
