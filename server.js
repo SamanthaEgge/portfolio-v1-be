@@ -44,8 +44,12 @@ server.use(express.json())
 // server.use(cors())
 server.use(session(sessionOptions))
 
-server.use('/blog', BlogRoutes)
 server.use('/', UserRoutes)
+server.use('/cats', CatRoutes)
+server.use('/skills', SkillRoutes)
+server.use('/blog', BlogRoutes)
+server.use('/feats', FeatRoutes)
+
 
 server.get('/', (request, response) => {
   response.json({ api: 'up', session: request.session })
