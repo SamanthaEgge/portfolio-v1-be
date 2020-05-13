@@ -7,7 +7,6 @@ const Blog = require('./blog-model')
 
 const restricted = require('../middleware/restricted.js/index.js')
 
-
 /////// Non-restricted routes, for front-facing portfolio
 /// GET for main page of blog, retrieves a set number of posts
 
