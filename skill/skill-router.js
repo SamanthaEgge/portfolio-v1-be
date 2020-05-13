@@ -2,7 +2,7 @@ const express = require('express')
 
 const router = express.Router()
 const Skills = require('./skill-model.js')
-const restricted = require('../middleware/restricted.js')
+// const restricted = require('../middleware/restricted.js')
 
 //// Public routes
 router.get('/', (request, response) => {
@@ -36,7 +36,8 @@ router.get('/:skillId', async (request, response) => {
 })
 
 //// Restricted Routes
-router.post('/', restricted, (request, response) => {
+// router.post('/', restricted, (request, response) => {
+router.post('/', (request, response) => {
   const newSkill = request.body
   if (newSkill) {
     Skills.createSkill(newSkill)
@@ -53,7 +54,8 @@ router.post('/', restricted, (request, response) => {
 
 })
 
-router.put('/:skillId', restricted, (request, response) => {
+// router.put('/:skillId', restricted, (request, response) => {
+router.put('/:skillId', (request, response) => {
   const skillId = request.params.skillId
   const skillChanges = request.body
 
@@ -67,7 +69,8 @@ router.put('/:skillId', restricted, (request, response) => {
     })
 })
 
-router.delete('/:skillId', restricted, (request, response) => {
+// router.delete('/:skillId', restricted, (request, response) => {
+router.delete('/:skillId', (request, response) => {
   const skillId = request.params.skillId
 
   Skills.deleteSkill(skillId)

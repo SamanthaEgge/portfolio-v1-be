@@ -2,7 +2,7 @@ const express = require('express')
 
 const router = express.Router()
 const Feats = require('./feature-model.js')
-const restricted = require('../middleware/restricted.js')
+// const restricted = require('../middleware/restricted.js')
 
 //Public routes
 router.get('/', async (request, response) => {
@@ -40,7 +40,8 @@ router.get('/featured', async (request, response) => {
 })
 
 // Restricted Routes
-router.put('/arrange', restricted, async (request, response) => {
+// router.put('/arrange', restricted, async (request, response) => {
+router.put('/arrange', async (request, response) => {
   const settingFeatures = request.body
 
   if (request.body && request.body.length === 4) {
@@ -58,7 +59,8 @@ router.put('/arrange', restricted, async (request, response) => {
   }
 })
 
-router.post('/', restricted, async (request, response) => {
+// router.post('/', restricted, async (request, response) => {
+router.post('/', async (request, response) => {
   const newFeat = request.body
 
   if ( newFeat.feature_title && newFeat.feature_photo && feature_summary ) {
@@ -76,7 +78,8 @@ router.post('/', restricted, async (request, response) => {
 
 })
 
-router.put('/:featID', restricted, async (request, response) => {
+// router.put('/:featID', restricted, async (request, response) => {
+router.put('/:featID', async (request, response) => {
   const featID = request.params.featID
   const featUpdate = request.body
 
@@ -98,7 +101,8 @@ router.put('/:featID', restricted, async (request, response) => {
   }
 })
 
-router.delete('/:featID', restricted, async (request, response) => {
+// router.delete('/:featID', restricted, async (request, response) => {
+router.delete('/:featID', async (request, response) => {
   const featID = request.params.featID
 
   Feats.deleteFeat(featID)

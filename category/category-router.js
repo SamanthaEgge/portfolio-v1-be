@@ -30,7 +30,8 @@ router.get('/:catId', (request, response) => {
 })
 
 //// Restricted Routes
-router.post('/', restricted, (request, response) => {
+// router.post('/', restricted, (request, response) => {
+router.post('/', (request, response) => {
   const newCat = request.body
 
   Categories.createCat(newCat)
@@ -43,7 +44,8 @@ router.post('/', restricted, (request, response) => {
     })
 })
 
-router.put('/:catId', restricted, (request, response) => {
+// router.put('/:catId', restricted, (request, response) => {
+router.put('/:catId', (request, response) => {
   const catId = request.params.catId
   const catChanges = request.body
 
@@ -57,7 +59,8 @@ router.put('/:catId', restricted, (request, response) => {
     })
 })
 
-router.delete('/:catId', restricted, (request, response) => {
+// router.delete('/:catId', restricted, (request, response) => {
+router.delete('/:catId', (request, response) => {
   const catId = request.params.catId
 
   Categories.deleteCat(catId)

@@ -23,7 +23,7 @@ module.exports = {
 
   //// Standard development/production set up if you're using Heroku only
   development: {
-    client: pg,
+    client: 'pg',
     connection: process.env.DATABASE_URL,
     pool: {
       min: 2,
@@ -40,7 +40,7 @@ module.exports = {
   },
 
   production: {
-    client: pg,
+    client: 'pg',
     connection: process.env.DATABASE_URL,
     pool: {
       min: 2,
