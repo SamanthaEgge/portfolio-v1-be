@@ -67,8 +67,8 @@ server.get('/', (req, res) => {
   res.send(`<h1>Server live</h1>`);
 });
 
-server.get('/admin', restricted, (request, response) => {
-  response.send('Admin pages')
-})
+// server.get('/admin', restricted, (request, response) => {
+//   response.send('Admin pages')
+// })
 
 module.exports = server
