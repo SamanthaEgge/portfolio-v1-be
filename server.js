@@ -53,10 +53,10 @@ server.get('/', (req, res) => {
 // server.use('/skills', SkillRoutes)
 // server.use('/blog', BlogRoutes)
 // server.use('/feats', FeatRoutes)
-server.use('api/cats', require('./category/category-router'))
-server.use('api/skills', require('./skill/skill-router'))
-server.use('api/blog', require('./blog/blog-router'))
-server.use('api/feats', require('./feature/feature-router'))
+server.use('/api/cats', require('./category/category-router'))
+server.use('/api/skills', require('./skill/skill-router'))
+server.use('/api/blog', require('./blog/blog-router'))
+server.use('/api/feats', require('./feature/feature-router'))
 
 
 
