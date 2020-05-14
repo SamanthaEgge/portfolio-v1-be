@@ -47,7 +47,7 @@ function findMainFeats() {
     })
 }
 
-async function selectMainFeats(featArray) {
+function selectMainFeats(featArray) {
   let updatedFeatures;
   try {
     let feats = findAllFeats()
