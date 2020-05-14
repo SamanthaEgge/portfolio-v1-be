@@ -32,14 +32,14 @@ function findFeatById(featId) {
     })
 }
 
-async function findMainFeats() {
+function findMainFeats() {
   let mainFeats;
   return db('feats')
     .where({feature_active: true})
     .select('*')
     .sort('feature_position')
     .then(feats => {
-      await feats.forEach(feat => {
+      feats.forEach(feat => {
         let addedFeat = findFeatById(feat.feat_id)
         mainFeats.push(addedFeat)
       })
@@ -50,7 +50,7 @@ async function findMainFeats() {
 async function selectMainFeats(featArray) {
   let updatedFeatures;
   try {
-    let feats = await findAllFeats()
+    let feats = findAllFeats()
     console.log(feats)
     feats.forEach(feat => {
       db('feats')
@@ -58,9 +58,9 @@ async function selectMainFeats(featArray) {
         .update({ feature_postition: null })
     })
 
-    await featArray.forEach(feat => {
+    featArray.forEach(feat => {
       db('feats')
-        .where({ feat_id: feat.feat_Id })
+        .where({ feat_id: feat.feat_id })
         .update(feat.feature_position)
         .then(feat => {
           updatedFeatures.push(feat)
