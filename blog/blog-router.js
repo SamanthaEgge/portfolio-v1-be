@@ -21,12 +21,12 @@ router.get('/blog', (request, response) => {
     })
 })
 
-router.get('/blog/?', (request, response) => {
-  Blog.get()
-})
+// router.get('/blog/?', (request, response) => {
+//   Blog.get()
+// })
 
-router.get('/blog/:title', (request, response) => {
-  const title = request.params.title
+router.get('/blog/:slug', (request, response) => {
+  const slug = request.params.slug
   
   
 

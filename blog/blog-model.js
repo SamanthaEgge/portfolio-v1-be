@@ -4,10 +4,17 @@ const knexConfig = require('../knexfile.js')
 const db = knex(knexConfig.development)
 
 module.exports = {
-  find,
+  findAllBlogs,
+  findBlogBySlug
 }
 
-function find() {
-  return db('users')
-    .select('id', 'email', 'password');
-} 
+// TODO: Inverse this so it goes newest to oldest
+function findAllBlogs() {
+  return db('blog')
+    .select('*');
+}
+
+function findBlogBySlug(slug) {
+  return db('blog')
+    .where({ })
+}
