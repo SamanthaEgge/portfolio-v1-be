@@ -41,6 +41,7 @@ server.use(function(req, res, next) {
 
 server.use(helmet())
 server.use(express.json())
+server.use(express())
 // server.use(cors())
 // server.use(session(sessionOptions))
 
@@ -48,10 +49,15 @@ server.use(express.json())
 server.get('/', (req, res) => {
   res.send(`<h1>Server live</h1>`);
 });
-server.use('/cats', CatRoutes)
-server.use('/skills', SkillRoutes)
-server.use('/blog', BlogRoutes)
-server.use('/feats', FeatRoutes)
+// server.use('/cats', require(CatRoutes)
+// server.use('/skills', SkillRoutes)
+// server.use('/blog', BlogRoutes)
+// server.use('/feats', FeatRoutes)
+server.use('api/cats', require('./category/category-router'))
+server.use('api/skills', require('./skill/skill-router'))
+server.use('api/blog', require('./blog/blog-router'))
+server.use('api/feats', require('./feature/feature-router'))
+
 
 
 // server.get('/', (request, response) => {

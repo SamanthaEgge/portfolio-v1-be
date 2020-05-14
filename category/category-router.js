@@ -68,3 +68,5 @@ router.delete('/:catId', (request, response) => {
       response.status(200).json({ removed, message: `Sucessfully deleted Category ${catId}` })
     })
 })
+
+module.exports = router

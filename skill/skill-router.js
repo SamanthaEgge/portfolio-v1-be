@@ -78,3 +78,5 @@ router.delete('/:skillId', (request, response) => {
       response.status(200).json({ removed, message: `Sucessfully deleted Skill ${skillId}` })
     })
 })
+
+module.exports = router
