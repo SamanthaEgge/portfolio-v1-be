@@ -4,7 +4,7 @@ const helmet = require('helmet')
 const session = require('express-session')
 const KnexSessionStore = require('connect-session-knex')(session)
 
-const knexConnection = require('../data/dbConfig.js')
+const knexConnection = require('./data/dbConfig.js')
 
 const UserRoutes = require('./user/user-router.js')
 const CatRoutes = require('./category/category-router.js')
