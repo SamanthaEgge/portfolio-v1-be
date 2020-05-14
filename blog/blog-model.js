@@ -5,7 +5,8 @@ const db = knex(knexConfig.development)
 
 module.exports = {
   findAllBlogs,
-  findBlogBySlug
+  findBlogBySlug,
+  createBlog
 }
 
 // TODO: Inverse this so it goes newest to oldest
@@ -16,5 +17,15 @@ function findAllBlogs() {
 
 function findBlogBySlug(slug) {
   return db('blog')
-    .where({ })
+    .where({ blog_slug: slug })
+    .first()
+    .select('*')
+}
+
+function createBlog(newBlog) {
+  return db('skills')
+    .insert(newBlog)
+    .then(() => {
+      return findBlogBySlug(newBlog.blog_slug)
+    })
 }

@@ -10,8 +10,8 @@ const restricted = require('../middleware/restricted.js/index.js')
 /////// Non-restricted routes, for front-facing portfolio
 /// GET for main page of blog, retrieves a set number of posts
 
-router.get('/blog', (request, response) => {
-  Blog.find()
+router.get('/', (request, response) => {
+  Blog.findAllBlogs()
     .then(posts => {
       response.status(200).json(posts)
     })
@@ -25,10 +25,31 @@ router.get('/blog', (request, response) => {
 //   Blog.get()
 // })
 
-router.get('/blog/:slug', (request, response) => {
+router.get('/:slug', (request, response) => {
   const slug = request.params.slug
   
-  
+  Blog.findBlogBySlug(slug)
+    .then(post => {
+      response.status(200).json(post)
+    })
+    .catch(error => {
+      console.log(error)
+      response.status(500).json({ message: 'Error retriving Blog'})
+    })
+
+})
+
+router.post('/', (request, response) => {
+  const newBlog = request.body
+
+  Blog.createBlog(newBlog)
+    .then(post => {
+      response.status(200).json(post)
+    })
+    .catch(error => {
+      console.log(error)
+      response.status(500).json({ message: 'Error creating Blog' })
+    })
 
 })
 
