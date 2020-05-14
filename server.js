@@ -15,22 +15,22 @@ const FeatRoutes = require('./feature/feature-router.js')
 
 const server = express();
 
-const sessionOptions = {
-  name: 'samanthaportfolio',
-  secret: process.env.COOKIE_SECRET || 'keep it secret, keep it safe!', /// for encryption
-  cookie: {
-    secure: process.env.COOKIE_SECURE || false, // Should be set to true during production, false for development
-    maxAge: 1000 * 60 * 60 * 24 ,  // set in milliseconds (set to 1 day)
-    httpOnly: true, // client JS has no access to the cookie
-  },
-  resave: false,
-  saveUninitialized: true,
-  store: new KnexSessionStore({  //// start back up once I create db
-    knex: knexConnection,
-    createtable: true,
-    clearInterval: 1000 * 60 * 60
-  })
-}
+// const sessionOptions = {
+//   name: 'samanthaportfolio',
+//   secret: process.env.COOKIE_SECRET || 'keep it secret, keep it safe!', /// for encryption
+//   cookie: {
+//     secure: process.env.COOKIE_SECURE || false, // Should be set to true during production, false for development
+//     maxAge: 1000 * 60 * 60 * 24 ,  // set in milliseconds (set to 1 day)
+//     httpOnly: true, // client JS has no access to the cookie
+//   },
+//   resave: false,
+//   saveUninitialized: true,
+//   store: new KnexSessionStore({  //// start back up once I create db
+//     knex: knexConnection,
+//     createtable: true,
+//     clearInterval: 1000 * 60 * 60
+//   })
+// }
 
 server.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", req.headers.origin); //req.headers.origin // '*'
@@ -42,18 +42,24 @@ server.use(function(req, res, next) {
 server.use(helmet())
 server.use(express.json())
 // server.use(cors())
-server.use(session(sessionOptions))
+// server.use(session(sessionOptions))
 
-server.use('/', UserRoutes)
+// server.use('/', UserRoutes)
+server.get('/', (req, res) => {
+  res.send(`<h1>Server live</h1>`);
+});
 server.use('/cats', CatRoutes)
 server.use('/skills', SkillRoutes)
 server.use('/blog', BlogRoutes)
 server.use('/feats', FeatRoutes)
 
 
-server.get('/', (request, response) => {
-  response.json({ api: 'up', session: request.session })
-})
+// server.get('/', (request, response) => {
+//   response.json({ api: 'up', session: request.session })
+// })
+server.get('/', (req, res) => {
+  res.send(`<h1>Server live</h1>`);
+});
 
 server.get('/admin', restricted, (request, response) => {
   response.send('Admin pages')
