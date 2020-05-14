@@ -2,7 +2,7 @@ const express = require('express')
 
 const router = express.Router()
 const Categories = require('./category-model.js')
-const restricted = require('../middleware/restricted.js')
+// const restricted = require('../middleware/restricted.js')
 
 //// Public routes
 router.get('/', (request, response) => {
