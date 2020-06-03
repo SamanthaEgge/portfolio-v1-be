@@ -5,6 +5,7 @@ const Feats = require('./feature-model.js')
 // const restricted = require('../middleware/restricted.js')
 
 //Public routes
+// Retrieving a list for admin page, could be utilized in future if I want to allow people to peruse all my projects
 router.get('/', async (request, response) => {
   try {
     const feats = await Feats.findAllFeats();
@@ -22,6 +23,7 @@ router.get('/', async (request, response) => {
   }
 })
 
+// Only front facing model.
 router.get('/featured', async (request, response) => {
   try {
     const featured = await Feats.findMainFeats()
