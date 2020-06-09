@@ -16,29 +16,26 @@ module.exports = {
 // This is retreiving a list for the admin page.
 // Will need to get skill pair in here later, if I implement "view all projects"
 function findAllFeats() {
-  return db('feats')
+  return db('features')
     .select('*')
 }
 
 // Used by Admin for editing feats
 function findFeatById(featId) {
-  return db('feats')
+  let single_feat
+  return db('features')
     .where({ feat_id: featId })
     .first()
-    .select('*')
-    .then(feat => {
-      feat
-        .leftJoin('blog')
-        .where({ blog_id: feat.blog_id })
-        .select('*')
-        .leftJoin('skill')
-    })
+    .join('blog', 'features.blog_id', 'blog.blog_id')
+    .join('skillPair', 'features.feat_id', 'skillPair.feat_id')
+    .join('skills', 'skillPair.skill_id', 'skills.skill_id')
+    .select('features.*', 'blog.blog_slug', 'skills.skill_name')
 }
 
 // Primary functionality for the main page, any clicks will go to blog post with further deets. Only front facing model
 function findMainFeats() {
   let mainFeats;
-  return db('feats')
+  return db('features')
     .where({feature_active: true})
     .select('*')
     .sort('feature_position')
@@ -58,13 +55,13 @@ function selectMainFeats(featArray) {
     let feats = findAllFeats()
     console.log(feats)
     feats.forEach(feat => {
-      db('feats')
+      db('features')
         .where({ feat_id: feat.feat_id })
         .update({ feature_postition: null })
     })
 
     featArray.forEach(feat => {
-      db('feats')
+      db('features')
         .where({ feat_id: feat.feat_id })
         .update(feat.feature_position)
         .then(feat => {
@@ -89,7 +86,7 @@ function createFeat(newFeat) {
   let feat_skills = newFeat.skills
   delete newFeat.skills
 
-  return db('feats')
+  return db('features')
     .insert(newFeat, 'feat_id')
     .then(ids => {
       const [id] = ids;
@@ -98,12 +95,11 @@ function createFeat(newFeat) {
     })
 }
 
-// 
 function modifyFeat(featId, updateFeat) {
   let feat_skills = updateFeat.skills
   delete updateFeat.skills
 
-  return db('feats')
+  return db('features')
     .where({ feat_id: featId })
     .update(updateFeat)
     .then(() => {
@@ -115,7 +111,7 @@ function modifyFeat(featId, updateFeat) {
 
 // Cascade skill pair table deletion
 function deleteFeat(featId) {
-  return db('feats')
+  return db('features')
     .where({ feat_id: featId })
     .del()
     .then(() => {
@@ -131,13 +127,13 @@ function addSkills(id, newSkills) {
     feat_id: id,
     skill_id: skill
     }
-    db('skill_pair')
+    db('skillPair')
       .insert(added_skill)
   })
 }
 
 function removeSkills(featId) {
-  db('skill_pair')
+  db('skillPair')
     .select('*')
     .where('feat_id', featId)
     .del()
