@@ -127,13 +127,13 @@ function addSkills(id, newSkills) {
     feat_id: id,
     skill_id: skill
     }
-    db('skillPair')
+    return db('skillPair')
       .insert(added_skill)
   })
 }
 
 function removeSkills(featId) {
-  db('skillPair')
+  return db('skillPair')
     .select('*')
     .where('feat_id', featId)
     .del()
