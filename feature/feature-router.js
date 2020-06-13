@@ -65,7 +65,7 @@ router.put('/arrange', async (request, response) => {
 router.post('/', async (request, response) => {
   const newFeat = request.body
 
-  if ( newFeat.feature_title && newFeat.feature_photo && feature_summary ) {
+  if ( newFeat.feature_title && newFeat.feature_photo && newFeat.feature_summary ) {
     Feats.createFeat(newFeat)
     .then(feat => {
       response.status(202).json({ feat, message: 'New feature created' })
