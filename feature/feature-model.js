@@ -25,7 +25,7 @@ async function findFeatById(featId) {
   let single_feat = await db('features')
     // .where({ feat_id: featId })
     // .first()
-    .join('blog', 'blog.blog_id', 'features.blog_id')
+    // .join('blog', 'blog.blog_id', 'features.blog_id')
     .join('skillPair', 'skillPair.feat_id', 'features.feat_id')
     .join('skills', 'skills.skill_id', 'skillPair.skill_id')
     .where('features.feat_id', featId)
@@ -92,7 +92,9 @@ function createFeat(newFeat) {
   let new_feat = db('features')
     .insert(newFeat)
 
+  console.log('created new feat')
   addSkills(new_feat.feat_id, feat_skills)
+  console.log('after addSkills call')
   return findFeatById(new_feat.feat_id) 
 }
 
@@ -123,13 +125,16 @@ function deleteFeat(featId) {
 
 // Helpler Functions
 function addSkills(id, newSkills) {
+  console.log('were in added skills')
+  console.log(newSkills)
   newSkills.forEach(skill => {
     let added_skill = {
     feat_id: id,
     skill_id: skill
     }
-    return db('skillPair')
+    db('skillPair')
       .insert(added_skill)
+    console.log('added a skill', skill)
   })
 }
 
