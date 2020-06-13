@@ -30,7 +30,6 @@ async function findFeatById(featId) {
     .join('skills', 'skills.skill_id', 'skillPair.skill_id')
     .where('features.feat_id', featId)
     .select('features.*', 'blog.blog_slug', 'skills.skill_name')
-    .first()
 
   return single_feat
 }
