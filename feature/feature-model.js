@@ -87,10 +87,10 @@ function createFeat(newFeat) {
   delete newFeat.skills
 
   return db('features')
-    .insert(newFeat, 'feat_id')
+    .insert(newFeat)
     .then(ids => {
       const [id] = ids;
-      addSkills(featid, feat_skills)
+      addSkills(id, feat_skills)
       return findFeatById(id) 
     })
 }
