@@ -21,21 +21,22 @@ function findAllFeats() {
 }
 
 // Used by Admin for editing feats
-function findFeatById(featId) {
-  let single_feat
-  return db('features')
+async function findFeatById(featId) {
+  let single_feat = await db('features')
     .where({ feat_id: featId })
     .first()
     .join('blog', 'features.blog_id', 'blog.blog_id')
     .join('skillPair', 'features.feat_id', 'skillPair.feat_id')
     .join('skills', 'skillPair.skill_id', 'skills.skill_id')
     .select('features.*', 'blog.blog_slug', 'skills.skill_name')
+
+  return single_feat
 }
 
 // Primary functionality for the main page, any clicks will go to blog post with further deets. Only front facing model
-function findMainFeats() {
+async function findMainFeats() {
   let mainFeats;
-  return db('features')
+  await db('features')
     .where({feature_active: true})
     .select('*')
     .sort('feature_position')
@@ -86,13 +87,12 @@ function createFeat(newFeat) {
   let feat_skills = newFeat.skills
   delete newFeat.skills
 
-  return db('features')
+ 
+  let new_feat = db('features')
     .insert(newFeat)
-    .then(ids => {
-      const [id] = ids;
-      addSkills(id, feat_skills)
-      return findFeatById(id) 
-    })
+
+  addSkills(new_feat.feat_id, feat_skills)
+  return findFeatById(new_feat.feat_id) 
 }
 
 function modifyFeat(featId, updateFeat) {
