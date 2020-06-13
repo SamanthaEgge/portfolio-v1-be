@@ -23,12 +23,14 @@ function findAllFeats() {
 // Used by Admin for editing feats
 async function findFeatById(featId) {
   let single_feat = await db('features')
-    .where({ feat_id: featId })
-    .first()
-    .join('blog', 'features.blog_id', 'blog.blog_id')
-    .join('skillPair', 'features.feat_id', 'skillPair.feat_id')
-    .join('skills', 'skillPair.skill_id', 'skills.skill_id')
+    // .where({ feat_id: featId })
+    // .first()
+    .join('blog', 'blog.blog_id', 'features.blog_id')
+    .join('skillPair', 'skillPair.feat_id', 'features.feat_id')
+    .join('skills', 'skills.skill_id', 'skillPair.skill_id')
+    .where('features.feat_id', featId)
     .select('features.*', 'blog.blog_slug', 'skills.skill_name')
+    .first()
 
   return single_feat
 }
