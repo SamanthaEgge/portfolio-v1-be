@@ -108,8 +108,9 @@ async function createFeat(newFeat) {
   let feat_skills = newFeat.skills
   delete newFeat.skills
 
-  let new_feat = db('features')
+  let new_feat = await db('features')
     .insert(newFeat)
+    .returning('*')
 
   await Skills.addSkillPair(new_feat.feat_id, feat_skills)
 
