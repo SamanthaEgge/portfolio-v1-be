@@ -62,8 +62,9 @@ async function findMainFeats() {
     .select('*')
     // .sort('feature_position')
     .then(feats => {
-      feats.forEach(feat => {
-        let addedFeat = findFeatById(feat.feat_id)
+      feats.forEach(async feat => {
+        let addedFeat = await findFeatById(feat.feat_id)
+        console.log('heres the addedFeat in findMain', addedFeat)
         mainFeats.push(addedFeat)
       })
       return mainFeats
@@ -111,6 +112,8 @@ async function createFeat(newFeat) {
   let new_feat = await db('features')
     .insert(newFeat)
     .returning('*')
+
+  console.log(new_feat)
 
   await Skills.addSkillPair(new_feat.feat_id, feat_skills)
 
