@@ -24,7 +24,7 @@ router.get('/', async (request, response) => {
 })
 
 // Get specific feat
-router.get('/:featid', async (request, response) => {
+router.get('/one/:featid', async (request, response) => {
   featid = request.params.featid
 
   try {
@@ -98,7 +98,7 @@ router.post('/', async (request, response) => {
 })
 
 // router.put('/:featID', restricted, async (request, response) => {
-router.put('/:featID', async (request, response) => {
+router.put('/one/:featID', async (request, response) => {
   const featID = request.params.featID
   const featUpdate = request.body
 
