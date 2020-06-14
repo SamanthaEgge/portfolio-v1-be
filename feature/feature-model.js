@@ -107,8 +107,8 @@ function modifyFeat(featId, updateFeat) {
     .where({ feat_id: featId })
     .update(updateFeat)
     .then(() => {
-      Skills.removeSkillPair(featId)
-      Skills.addSkillPair(featId, feat_skills)
+      // Skills.removeSkillPair(featId)
+      // Skills.addSkillPair(featId, feat_skills)
       return findFeatById(featId)
     })
 }

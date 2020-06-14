@@ -23,6 +23,23 @@ router.get('/', async (request, response) => {
   }
 })
 
+// Get specific feat
+router.get('/:featid', async (request, response) => {
+  featid = request.params.featid
+
+  try {
+    const feat = await Feats.findFeatById(featid)
+    if (feat) {
+      response.status(200).json({ feat, message: 'This feat was located' })
+    } else {
+      response.status(404).json({ message: `Could not locate feat with ID ${featid}`})
+    }
+  } catch (error) {
+    console.log(error)
+    response.status(500).json({ error, message: 'Unable to make request for feat' })
+  }
+})
+
 // Only front facing model.
 router.get('/featured', async (request, response) => {
   try {

@@ -73,17 +73,11 @@ function addSkillPair(feat_id, skills) {
     skill_array.push(added_skill)
   })
 
+  console.log('added a skill', skill_array)
   return db('skillPair')
     .insert(skill_array)
-    console.log('added a skill', skill)
-}
 
-// function removeSkillPair(featId) {
-//   return db('skillPair')
-//     .select('*')
-//     .where('feat_id', featId)
-//     .del()
-// }
+}
 
 function deleteSkillPair(pair_id) {
   return db('skillPair')
