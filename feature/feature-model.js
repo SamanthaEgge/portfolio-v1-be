@@ -30,13 +30,13 @@ async function findFeatById(featId) {
     .join('skills', 'skills.skill_id', 'skillPair.skill_id')
     .select('skills.skill_name')
 
-  console.log(all_skills)
+  // console.log(all_skills)
 
   all_skills.forEach(skill => {
     skill_array.push(skill.skill_name)
   })
 
-  console.log(skill_array)
+  // console.log(skill_array)
   
   let single_feat = await db('features')
     // .where({ feat_id: featId })
@@ -58,9 +58,9 @@ async function findFeatById(featId) {
 async function findMainFeats() {
   let mainFeats;
   await db('features')
-    .where({feature_active: true})
+    .where('features.feature_active', true)
     .select('*')
-    .sort('feature_position')
+    // .sort('feature_position')
     .then(feats => {
       feats.forEach(feat => {
         let addedFeat = findFeatById(feat.feat_id)
@@ -105,16 +105,12 @@ function selectMainFeats(featArray) {
     // feat: feat_id
 // ))
 function createFeat(newFeat) {
-  let feat_skills = newFeat.skills
-  delete newFeat.skills
+  // let feat_skills = newFeat.skills
+  // delete newFeat.skills
 
- 
   let new_feat = db('features')
     .insert(newFeat)
 
-  console.log('created new feat')
-  Skills.addSkillPair(new_feat.feat_id, feat_skills)
-  console.log('after addSkillPair call')
   return findFeatById(new_feat.feat_id) 
 }
 
