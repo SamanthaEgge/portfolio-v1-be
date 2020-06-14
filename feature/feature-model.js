@@ -26,7 +26,7 @@ async function findFeatById(featId) {
   let single_feat = await db('features')
     // .where({ feat_id: featId })
     // .first()
-    // .join('blog', 'blog.blog_id', 'features.blog_id')
+    .join('blog', 'blog.blog_id', 'features.blog_id')
     .join('skillPair', 'skillPair.feat_id', 'features.feat_id')
     .join('skills', 'skills.skill_id', 'skillPair.skill_id')
     .where('features.feat_id', featId)
