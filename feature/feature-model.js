@@ -2,6 +2,7 @@ const knex = require('knex')
 const knexConfig = require('../knexfile.js')
 
 const db = knex(knexConfig.development)
+const Skills = require('../skill/skill-model.js')
 
 module.exports = {
   findAllFeats,
@@ -93,8 +94,8 @@ function createFeat(newFeat) {
     .insert(newFeat)
 
   console.log('created new feat')
-  addSkills(new_feat.feat_id, feat_skills)
-  console.log('after addSkills call')
+  Skills.addSkillPair(new_feat.feat_id, feat_skills)
+  console.log('after addSkillPair call')
   return findFeatById(new_feat.feat_id) 
 }
 
@@ -106,8 +107,8 @@ function modifyFeat(featId, updateFeat) {
     .where({ feat_id: featId })
     .update(updateFeat)
     .then(() => {
-      removeSkills(featId)
-      addSkills(featId, feat_skills)
+      Skills.removeSkillPair(featId)
+      Skills.addSkillPair(featId, feat_skills)
       return findFeatById(featId)
     })
 }
@@ -120,27 +121,4 @@ function deleteFeat(featId) {
     .then(() => {
       return featId
     })
-}
-
-
-// Helpler Functions
-function addSkills(id, newSkills) {
-  console.log('were in added skills')
-  console.log(newSkills)
-  newSkills.forEach(skill => {
-    let added_skill = {
-    feat_id: id,
-    skill_id: skill
-    }
-    db('skillPair')
-      .insert(added_skill)
-    console.log('added a skill', skill)
-  })
-}
-
-function removeSkills(featId) {
-  return db('skillPair')
-    .select('*')
-    .where('feat_id', featId)
-    .del()
 }

@@ -79,4 +79,42 @@ router.delete('/:skillId', (request, response) => {
     })
 })
 
+
+
+///// Skill Pair Table Routes
+
+router.get('/pairs', (request, response) => {
+  Skills.findSkillPairs()
+    .then(pairs => {
+      response.status(200).json(pairs)
+    })
+    .catch(error => {
+      console.log(error)
+      response.status(500).json({ message: 'Unable to retrieve pairs' })
+    })
+})
+
+router.post('/pairs', (request, response) => {
+  skills = request.body.skills
+  feat = request.body.feat_id
+
+  Skills.addSkillPair(feat, skills)
+    .then(skills => {
+      response.status(200).json(skills)
+    })
+    .catch(error => {
+      console.log(error)
+      response.status(500).json({ message: 'Unable to create skill pairs.' })
+    })
+})
+
+router.delete('/pairs/:pairid', (request, response) => {
+  const skillPair = request.params.pairid
+
+  Skills.deleteSkillPair(skillId)
+    .then(removed => {
+      response.status(200).json({ removed, message: `Sucessfully deleted Skill ${skillId}` })
+    })
+})
+
 module.exports = router
