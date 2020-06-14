@@ -104,12 +104,14 @@ function selectMainFeats(featArray) {
     // ...skill,
     // feat: feat_id
 // ))
-function createFeat(newFeat) {
-  // let feat_skills = newFeat.skills
-  // delete newFeat.skills
+async function createFeat(newFeat) {
+  let feat_skills = newFeat.skills
+  delete newFeat.skills
 
   let new_feat = db('features')
     .insert(newFeat)
+
+  await Skills.addSkillPair(new_feat.feat_id, feat_skills)
 
   return findFeatById(new_feat.feat_id) 
 }
