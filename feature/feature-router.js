@@ -126,7 +126,7 @@ router.delete('/:featID', async (request, response) => {
 
   Feats.deleteFeat(featID)
     .then(feat => {
-      response.status(200).json({ feat, message: `Successfully deleted skill ${featID}` })
+      response.status(200).json({ feat, message: `Successfully deleted feat ${featID}` })
     })
     .catch(error => {
       console.log(error)

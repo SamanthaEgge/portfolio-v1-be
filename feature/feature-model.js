@@ -31,6 +31,12 @@ async function findFeatById(featId) {
     .select('skills.skill_name')
 
   console.log(all_skills)
+
+  all_skills.forEach(skill => {
+    skill_array.push(skill.skill_name)
+  })
+
+  console.log(skill_array)
   
   let single_feat = await db('features')
     // .where({ feat_id: featId })
@@ -39,9 +45,11 @@ async function findFeatById(featId) {
     // .join('skillPair', 'skillPair.feat_id', 'features.feat_id')
     // .join('skills', 'skills.skill_id', 'skillPair.skill_id')
     .where('features.feat_id', featId)
-    .select('features.*', 'blog.blog_slug', 'skills.skill_name')
+    .select('features.*', 'blog.blog_slug')
 
   single_feat.skills = skill_array
+
+  console.log(single_feat)
 
   return single_feat
 }
