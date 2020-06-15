@@ -67,8 +67,9 @@ async function findMainFeats() {
         console.log('heres the addedFeat in findMain', addedFeat)
         mainFeats.push(addedFeat)
       })
-      return mainFeats
     })
+  console.log('MAINFEATS IN MODEL', mainFeats)
+  return mainFeats
 }
 
 // Admin functionality to reset Feat
