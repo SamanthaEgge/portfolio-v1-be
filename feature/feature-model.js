@@ -56,7 +56,7 @@ async function findFeatById(featId) {
 
 // Primary functionality for the main page, any clicks will go to blog post with further deets. Only front facing model
 async function findMainFeats() {
-  let mainFeats;
+  let mainFeats = [];
   await db('features')
     .where('features.feature_active', true)
     .select('*')
