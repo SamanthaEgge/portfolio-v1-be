@@ -42,21 +42,20 @@ router.get('/one/:featid', async (request, response) => {
 
 // Only front facing model.
 router.get('/featured', async (request, response) => {
+  let featured
   try {
-    const featured = await Feats.findMainFeats()
-
-    console.log('FEATURED IN ROUTE', featured)
-
-    if (featured) {
-      response.status(200).json({ featured, message: 'Home page features were found' })
-    } else {
-      response
-        .status(404)
-        .json({ message: 'Home page features were not found in the database' })
-    }
+    featured = await Feats.findMainFeats()
   } catch (error) {
     console.log(error)
     response.status(500).json({ error, message: 'Unable to make request to server' })
+  }
+  
+  if (featured) {
+    response.status(200).json({ featured, message: 'Home page features were found' })
+  } else {
+    response
+      .status(404)
+      .json({ message: 'Home page features were not found in the database' })
   }
 })
 

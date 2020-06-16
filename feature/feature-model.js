@@ -54,24 +54,49 @@ async function findFeatById(featId) {
   return single_feat
 }
 
+
+
+
+
+
+function findingFeats(y) {
+  return new Promise ((resolve) => {
+    setTimeout(() => {
+      let addedFeat = await findFeatById(feat.feat_id)
+      resolve(addedFeat);
+    }, 400);
+  })
+}
+  
+async function pushToMain(feats) {
+  for (const feat of feats) {
+    const addedFeat = await findingFeats(feat);
+    mainFeats.push(addedFeat);
+  }
+  console.log(newArr);
+  return mainFeats
+}
+
 // Primary functionality for the main page, any clicks will go to blog post with further deets. Only front facing model
 async function findMainFeats() {
-  let mainFeats = [];
+  let mainFeatsFunction = [];
   await db('features')
     .where('features.feature_active', true)
     .select('*')
-    // .sort('feature_position')
     .then(feats => {
-      feats.map(async feat => {
-        let addedFeat = await findFeatById(feat.feat_id)
-        console.log('heres the addedFeat in findMain', addedFeat)
-        mainFeats.push(addedFeat)
-        console.log('each iteration of mainFeats')
-        })
+      mainFeatsFunction = pushToMain(feats)
     })
-
-    console.log('MAINFEATS IN MODEL', mainFeats)
-    return mainFeats
+    // .sort('feature_position')
+    // .then(feats => {
+    //   feats.forEach(async feat => {
+    //     let addedFeat = await findFeatById(feat.feat_id)
+    //     console.log('heres the addedFeat in findMain', addedFeat)
+    //     mainFeats.push(addedFeat)
+    //     console.log('each iteration of mainFeats')
+    //     })
+    //   })    
+    console.log('MAINFEATS IN MODEL', mainFeatsFunction)
+    return mainFeatsFunction
 }
 
 // Admin functionality to reset Feat
