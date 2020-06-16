@@ -62,7 +62,7 @@ async function findFeatById(featId) {
 function findingFeats(y) {
   return new Promise ((resolve) => {
     setTimeout(() => {
-      let addedFeat = await findFeatById(feat.feat_id)
+      let addedFeat = findFeatById(feat.feat_id)
       resolve(addedFeat);
     }, 400);
   })
