@@ -49,7 +49,7 @@ async function findFeatById(featId) {
 
   single_feat.skills = skill_array
 
-  console.log(single_feat)
+  // console.log(single_feat)
 
   return single_feat
 }
@@ -61,15 +61,18 @@ async function findMainFeats() {
     .where('features.feature_active', true)
     .select('*')
     // .sort('feature_position')
-    .then(feats => {
+    let eachFeat = newPromise((resolve, reject) => {
       feats.forEach(async feat => {
         let addedFeat = await findFeatById(feat.feat_id)
         console.log('heres the addedFeat in findMain', addedFeat)
         mainFeats.push(addedFeat)
-      })
+        console.log('each iteration of mainFeats')
+        })
+    })
+    eachFeat.then(() => {
+      return mainFeats
     })
   console.log('MAINFEATS IN MODEL', mainFeats)
-  return mainFeats
 }
 
 // Admin functionality to reset Feat

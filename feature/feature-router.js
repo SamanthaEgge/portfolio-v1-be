@@ -45,6 +45,8 @@ router.get('/featured', async (request, response) => {
   try {
     const featured = await Feats.findMainFeats()
 
+    console.log('FEATURED IN ROUTE', featured)
+
     if (featured) {
       response.status(200).json({ featured, message: 'Home page features were found' })
     } else {
@@ -84,13 +86,13 @@ router.post('/', async (request, response) => {
 
   if ( newFeat.feature_title && newFeat.feature_photo && newFeat.feature_summary ) {
     Feats.createFeat(newFeat)
-    .then(feat => {
-      response.status(202).json({ feat, message: 'New feature created' })
-    })
-    .catch(error => {
-      console.log(error)
-      response.status(500).json({ error, message: 'Could not reach server to add feature.' })
-    })
+      .then(feat => {
+        response.status(202).json({ feat, message: 'New feature created' })
+      })
+      .catch(error => {
+        console.log(error)
+        response.status(500).json({ error, message: 'Could not reach server to add feature.' })
+      })
   } else {
     response.status(400).json({ message: 'Adding new feat requires title, photo, and summary.' })
   }
