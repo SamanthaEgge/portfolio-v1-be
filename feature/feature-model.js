@@ -74,7 +74,7 @@ async function pushToMain(feats) {
     const addedFeat = await findingFeats(feat);
     asyncMain.push(addedFeat);
   }
-  console.log(newArr);
+  console.log(asyncMain);
   return asyncMain
 }
 
