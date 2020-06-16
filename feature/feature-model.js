@@ -61,7 +61,7 @@ async function findMainFeats() {
     .where('features.feature_active', true)
     .select('*')
     // .sort('feature_position')
-    let eachFeat = newPromise((resolve, reject) => {
+    let eachFeat = new Promise((resolve, reject) => {
       feats.forEach(async feat => {
         let addedFeat = await findFeatById(feat.feat_id)
         console.log('heres the addedFeat in findMain', addedFeat)
