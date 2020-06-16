@@ -59,7 +59,7 @@ async function findFeatById(featId) {
 
 
 
-function findingFeats(y) {
+function findingFeats(feat) {
   return new Promise ((resolve) => {
     setTimeout(() => {
       let addedFeat = findFeatById(feat.feat_id)
