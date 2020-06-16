@@ -69,12 +69,13 @@ function findingFeats(feat) {
 }
   
 async function pushToMain(feats) {
+  let asyncMain = []
   for (const feat of feats) {
     const addedFeat = await findingFeats(feat);
-    mainFeats.push(addedFeat);
+    asyncMain.push(addedFeat);
   }
   console.log(newArr);
-  return mainFeats
+  return asyncMain
 }
 
 // Primary functionality for the main page, any clicks will go to blog post with further deets. Only front facing model
