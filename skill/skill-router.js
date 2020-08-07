@@ -2,7 +2,7 @@ const express = require('express')
 
 const router = express.Router()
 const Skills = require('./skill-model.js')
-const restricted = require('../middleware/restricted.js')
+// const restricted = require('../middleware/restricted.js')
 
 //// Public routes
 router.get('/', (request, response) => {
@@ -36,6 +36,7 @@ router.get('/:skillId', async (request, response) => {
 })
 
 //// Restricted Routes
+// router.post('/', restricted, (request, response) => {
 router.post('/', (request, response) => {
   const newSkill = request.body
   if (newSkill) {
@@ -53,6 +54,7 @@ router.post('/', (request, response) => {
 
 })
 
+// router.put('/:skillId', restricted, (request, response) => {
 router.put('/:skillId', (request, response) => {
   const skillId = request.params.skillId
   const skillChanges = request.body
@@ -67,6 +69,7 @@ router.put('/:skillId', (request, response) => {
     })
 })
 
+// router.delete('/:skillId', restricted, (request, response) => {
 router.delete('/:skillId', (request, response) => {
   const skillId = request.params.skillId
 
@@ -75,3 +78,43 @@ router.delete('/:skillId', (request, response) => {
       response.status(200).json({ removed, message: `Sucessfully deleted Skill ${skillId}` })
     })
 })
+
+
+
+///// Skill Pair Table Routes
+
+router.get('/pairs', (request, response) => {
+  Skills.findSkillPairs()
+    .then(pairs => {
+      response.status(200).json(pairs)
+    })
+    .catch(error => {
+      console.log(error)
+      response.status(500).json({ message: 'Unable to retrieve pairs' })
+    })
+})
+
+router.post('/pairs', (request, response) => {
+  skills = request.body.skills
+  feat = request.body.feat_id
+
+  Skills.addSkillPair(feat, skills)
+    .then(skills => {
+      response.status(200).json(skills)
+    })
+    .catch(error => {
+      console.log(error)
+      response.status(500).json({ message: 'Unable to create skill pairs.' })
+    })
+})
+
+router.delete('/pairs/:pairid', (request, response) => {
+  const skillPair = request.params.pairid
+
+  Skills.deleteSkillPair(skillId)
+    .then(removed => {
+      response.status(200).json({ removed, message: `Sucessfully deleted Skill ${skillId}` })
+    })
+})
+
+module.exports = router

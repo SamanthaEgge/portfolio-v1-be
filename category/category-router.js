@@ -2,7 +2,7 @@ const express = require('express')
 
 const router = express.Router()
 const Categories = require('./category-model.js')
-const restricted = require('../middleware/restricted.js')
+// const restricted = require('../middleware/restricted.js')
 
 //// Public routes
 router.get('/', (request, response) => {
@@ -30,6 +30,7 @@ router.get('/:catId', (request, response) => {
 })
 
 //// Restricted Routes
+// router.post('/', restricted, (request, response) => {
 router.post('/', (request, response) => {
   const newCat = request.body
 
@@ -43,6 +44,7 @@ router.post('/', (request, response) => {
     })
 })
 
+// router.put('/:catId', restricted, (request, response) => {
 router.put('/:catId', (request, response) => {
   const catId = request.params.catId
   const catChanges = request.body
@@ -57,6 +59,7 @@ router.put('/:catId', (request, response) => {
     })
 })
 
+// router.delete('/:catId', restricted, (request, response) => {
 router.delete('/:catId', (request, response) => {
   const catId = request.params.catId
 
@@ -65,3 +68,5 @@ router.delete('/:catId', (request, response) => {
       response.status(200).json({ removed, message: `Sucessfully deleted Category ${catId}` })
     })
 })
+
+module.exports = router

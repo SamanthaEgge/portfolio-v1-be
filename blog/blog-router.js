@@ -5,14 +5,13 @@ const express = require('express')
 const router = express.Router()
 const Blog = require('./blog-model')
 
-const restricted = require('../middleware/restricted.js/index.js')
-
+// const restricted = require('../middleware/restricted.js')
 
 /////// Non-restricted routes, for front-facing portfolio
 /// GET for main page of blog, retrieves a set number of posts
 
-router.get('/blog', (request, response) => {
-  Blog.find()
+router.get('/', (request, response) => {
+  Blog.findAllBlogs()
     .then(posts => {
       response.status(200).json(posts)
     })
@@ -22,23 +21,39 @@ router.get('/blog', (request, response) => {
     })
 })
 
-router.get('/blog/?', (request, response) => {
-  Blog.get()
+// router.get('/blog/?', (request, response) => {
+//   Blog.get()
+// })
+
+router.get('/:slug', (request, response) => {
+  const slug = request.params.slug
+  
+  Blog.findBlogBySlug(slug)
+    .then(post => {
+      response.status(200).json(post)
+    })
+    .catch(error => {
+      console.log(error)
+      response.status(500).json({ message: 'Error retriving Blog'})
+    })
+
 })
 
-router.get('/blog/:title', (request, response) => {
-  const title = request.params.title
+router.post('/', (request, response) => {
+  const newBlog = request.body
 
+  Blog.createBlog(newBlog)
+    .then(post => {
+      response.status(200).json(post)
+    })
+    .catch(error => {
+      console.log(error)
+      response.status(500).json({ message: 'Error creating Blog' })
+    })
 
 })
 
 
 /////// Restricted routes, for admin panel
-
-
-
-//// middleware for blogRouter
-
-
 
 module.exports = router

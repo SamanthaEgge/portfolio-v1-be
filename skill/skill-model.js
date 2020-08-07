@@ -8,7 +8,11 @@ module.exports = {
   findSkillById,
   createSkill,
   modifySkill,
-  deleteSkill
+  deleteSkill,
+  findSkillPairs,
+  addSkillPair,
+  deleteSkillPair,
+  // removeSkillPair
 }
 
 function findAllSkills() {
@@ -47,5 +51,39 @@ function deleteSkill(skillId) {
     .del()
     .then(() => {
       return skillId
+    })
+}
+
+
+///// Skill Pair Table
+function findSkillPairs() {
+  return db('skillPair')
+    .select('*')
+}
+
+function addSkillPair(feat_id, skills) {
+  console.log('were in added skills')
+  console.log(skills)
+  skill_array = []
+  skills.forEach(skill => {
+    let added_skill = {
+    feat_id: feat_id,
+    skill_id: skill
+    }
+    skill_array.push(added_skill)
+  })
+
+  console.log('added a skill', skill_array)
+  return db('skillPair')
+    .insert(skill_array)
+
+}
+
+function deleteSkillPair(pair_id) {
+  return db('skillPair')
+    .where({ skill_pair_id: pair_id })
+    .del()
+    .then(() => {
+      return pair_id
     })
 }
