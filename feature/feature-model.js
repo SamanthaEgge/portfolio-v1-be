@@ -49,7 +49,7 @@ async function findFeatById(featId) {
 
   single_feat.skills = skill_array
 
-  // console.log(single_feat)
+  console.log(single_feat)
 
   return single_feat
 }
@@ -96,7 +96,7 @@ async function findMainFeats() {
     //     console.log('each iteration of mainFeats')
     //     })
     //   })    
-    console.log('MAINFEATS IN MODEL', mainFeatsFunction)
+    // console.log('MAINFEATS IN MODEL', mainFeatsFunction)
     return mainFeatsFunction
 }
 

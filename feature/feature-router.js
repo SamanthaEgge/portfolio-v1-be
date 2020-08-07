@@ -49,7 +49,6 @@ router.get('/featured', async (request, response) => {
     console.log(error)
     response.status(500).json({ error, message: 'Unable to make request to server' })
   }
-  
   if (featured) {
     response.status(200).json({ featured, message: 'Home page features were found' })
   } else {
