@@ -47,7 +47,7 @@ async function findFeatById(featId) {
     .where('features.feat_id', featId)
     .select('features.*', 'blog.blog_slug')
 
-  single_feat.skills = skill_array
+  single_feat[0].skills = skill_array
 
   console.log(single_feat)
 
